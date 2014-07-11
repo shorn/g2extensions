@@ -1,4 +1,3 @@
-
 ext.genDir = "gen"
 
 project.buildDir = "../${rootProject.ext.genDir}/$project.name"
@@ -16,12 +15,11 @@ allprojects { Project iProject ->
   apply plugin: 'maven'
 
   repositories {
-    mavenCentral()
+    jcenter()
   }
 
-idea.module.outputFile = file("${rootProject.ext.idePrefix}/${iProject.name}.iml")
-
-
+  idea.module.outputFile =
+    file("${rootProject.ext.idePrefix}/${iProject.name}.iml")
 }
 
 idea {
@@ -29,45 +27,48 @@ idea {
     file("${rootProject.ext.idePrefix}/${rootProject.name}.iws")
   project {
     languageLevel = '1.6'
+    jdkName = '1.6'
     outputFile = file("${rootProject.ext.idePrefix}/${rootProject.name}.ipr")
-  }  
+  }
 }
 
 
 subprojects { Project iProject ->
   apply plugin: 'groovy'
 
-  iProject.buildDir = "$rootProject.ext.genDir/$iProject.name"
+  iProject.buildDir = "$rootProject.buildDir/$iProject.name"
 
   dependencies {
-    compile gradleApi()
-    compile localGroovy()
-    testCompile 'junit:junit:4.+' 
+    compile 'org.codehaus.groovy:groovy-all:2.3.2'
   }
 
 }
 
-project(':eclipsei2g'){
+project(':eclipsei2g') {
   group = 'eclipsei2g'
   version = '0.0.1-SNAPSHOT'
 
-task sourceJar(type: Jar) {
-  classifier = 'sources'
-  from sourceSets.main.allSource
-}
+  dependencies {
+    compile 'org.gradle:gradle-core:2.0'
+  }
 
-artifacts {
-  archives sourceJar
-}
+  task sourceJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+  }
 
-uploadArchives {
-  repositories {
-    mavenDeployer {
-      repository(url: uri(rootProject.ext.deployRepoUri))
-      snapshotRepository(url: uri(rootProject.ext.snapshotRepoUri))
+  artifacts {
+    archives sourceJar
+  }
+
+  uploadArchives {
+    repositories {
+      mavenDeployer {
+        repository(url: uri(rootProject.ext.deployRepoUri))
+        snapshotRepository(url: uri(rootProject.ext.snapshotRepoUri))
+      }
     }
   }
-}
 
 }
 

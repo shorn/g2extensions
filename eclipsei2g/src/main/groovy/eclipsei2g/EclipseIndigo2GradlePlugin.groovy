@@ -3,7 +3,7 @@ package eclipse2gradle
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
-class Eclipse2GradlePlugin implements Plugin<Project> {
+class EclipseIndigo2GradlePlugin implements Plugin<Project> {
   void apply(Project project) {
     project.logger.debug "eclipse2gradle apply called from $project"
 
