@@ -1,4 +1,4 @@
-package eclipse2gradle
+package eclipsei2g
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
