@@ -1,0 +1,39 @@
+buildscript {
+  repositories {
+    mavenCentral()
+    maven {
+      url uri('../../../../gen/repo')
+    }
+  }
+  dependencies {
+    classpath group: 'eclipse2gradle', name: 'eclipse2gradle', version: '0.0.1-SNAPSHOT'
+  }
+}
+
+apply plugin: 'eclipse2gradle'
+apply plugin: 'java'
+
+
+repositories {
+  mavenCentral()
+}
+
+eclipse2gradle{
+  classpath = file('.classpath')
+  modifyPath{ it.replace("C:/", "D:/") }
+}
+
+dependencies{
+  compile files(eclipse2gradle.filePaths)
+  compile 'junit:junit:4.+'
+}
+
+//eclipse2gradle.addLibsToProjectDependencies()
+
+//eclipse2gradle.modifyPath {it.replace("C:/", "C:/blah/")}
+//eclipse2gradle.addLibsToProjectDependencies('.classpath'){println "X: $it"}
+
+task echoCompileClasspath << {
+  sourceSets.main.compileClasspath.each{ println "compileClasspath: "+it }
+//  sourceSets.test.compileClasspath.each{ println "testClasspath: "+it }
+}
