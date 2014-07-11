@@ -1,0 +1,44 @@
+buildscript {
+  repositories {
+    mavenCentral()
+    maven {
+      url uri('../../../gen/repo')
+    }
+  }
+  dependencies {
+    classpath group: 'g2idea13', name: 'g2idea13', version: '0.0.1-SNAPSHOT'
+  }
+}
+
+apply plugin: 'idea'
+apply plugin: 'g2idea13'
+apply plugin: 'java'
+
+ext{
+  exampleIdeaGen = "../../../gen/example-g2idea/example-g2idea"
+}
+
+repositories {
+  jcenter()
+}
+
+idea {
+  g2idea13{
+    compilerConfiguration = 'Eclipse'
+  }
+
+  tasks.ideaWorkspace.outputFile =
+    file("${rootProject.ext.exampleIdeaGen}.iws")
+  module.outputFile = file("${rootProject.ext.exampleIdeaGen}.iml")
+
+  project {
+    outputFile = file("${rootProject.ext.exampleIdeaGen}.ipr")
+  }
+}
+
+
+
+
+//dependencies{
+//  compile 'junit:junit:4.+'
+//}

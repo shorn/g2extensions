@@ -38,11 +38,15 @@ subprojects { Project iProject ->
 
   iProject.buildDir = "$rootProject.buildDir/$iProject.name"
 
+  sourceCompatibility = 1.6
+  targetCompatibility = 1.6
+
   dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.3.2'
   }
 
 }
+
 
 project(':eclipsei2g') {
   group = 'eclipsei2g'
@@ -51,6 +55,21 @@ project(':eclipsei2g') {
   dependencies {
     compile 'org.gradle:gradle-core:2.0'
   }
+}
+
+project(':g2idea13') {
+  group = 'g2idea13'
+  version = '0.0.1-SNAPSHOT'
+
+  dependencies {
+    compile gradleApi()
+//    compile 'org.gradle:gradle-core:2.0'
+//    compile 'org.gradle:gradle-ide:2.0'
+  }
+}
+
+
+configure([project(':eclipsei2g'), project(':g2idea13')]) {
 
   task sourceJar(type: Jar) {
     classifier = 'sources'
@@ -71,10 +90,3 @@ project(':eclipsei2g') {
   }
 
 }
-
-
-
-
-
-
-
