@@ -6,7 +6,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath group: 'eclipsei2g', name: 'eclipsei2g', version: '0.0.1-SNAPSHOT'
+    classpath 'g2extensions:eclipsei2g:0.0.1-SNAPSHOT'
   }
 }
 
@@ -20,7 +20,7 @@ repositories {
 
 eclipse2gradle{
   classpath = file('.classpath')
-  modifyPath{ it.replace("C:/", "/blah/") }
+  modifyPath{ it.replace("C:/", "//blah/") }
 }
 
 dependencies{

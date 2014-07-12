@@ -49,7 +49,7 @@ subprojects { Project iProject ->
 
 
 project(':eclipsei2g') {
-  group = 'eclipsei2g'
+  group = 'g2extensions'
   version = '0.0.1-SNAPSHOT'
 
   dependencies {
@@ -58,7 +58,7 @@ project(':eclipsei2g') {
 }
 
 project(':g2idea13') {
-  group = 'g2idea13'
+  group = 'g2extensions'
   version = '0.0.1-SNAPSHOT'
 
   dependencies {

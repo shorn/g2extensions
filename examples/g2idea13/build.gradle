@@ -1,12 +1,12 @@
 buildscript {
   repositories {
-    mavenCentral()
+    jcenter()
     maven {
       url uri('../../../gen/repo')
     }
   }
   dependencies {
-    classpath group: 'g2idea13', name: 'g2idea13', version: '0.0.1-SNAPSHOT'
+    classpath 'g2extensions:g2idea13:0.0.1-SNAPSHOT'
   }
 }
 
