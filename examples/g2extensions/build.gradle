@@ -1,0 +1,22 @@
+// This is my crazy attempt at conditionally including the g2idea13 plugin
+// from the local snapshot repo so I can dogfood the plugin on the g2extensions
+// project itself.
+
+allprojects{ Project iProject ->
+  apply plugin: 'g2idea13'
+
+}
+
+idea{
+  g2idea13{
+    baseDirectory = rootProject.ext.idePrefix
+  }
+  project{
+    languageLevel = '1.6'
+    jdkName = '1.6'
+  }
+}
+
+task echoIncluded << {
+  println "blah"
+}

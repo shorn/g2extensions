@@ -6,13 +6,12 @@ buildscript {
     }
   }
   dependencies {
+    // this version has to have been uploaded on the local machne in a previous
+    // run of the g2extensions build
     classpath 'g2extensions:g2idea13:0.0.1-SNAPSHOT'
   }
 }
 
-apply plugin: 'idea'
-apply plugin: 'g2idea13'
-apply plugin: 'java'
 
 ext{
 //  exampleIdeaGen = "../../../gen/example-g2idea/example-g2idea"
@@ -23,15 +22,21 @@ repositories {
   jcenter()
 }
 
+allprojects{ Project iProject ->
+  apply plugin: 'idea'
+  apply plugin: 'g2idea13'
+  apply plugin: 'java'
+
+
+}
+
 idea {
   g2idea13{
     baseDirectory = project.ext.exampleIdeaGen
     compilerConfiguration = 'Eclipse'
+    compilerHeapSize = '512'
   }
-
 }
-
-
 
 
 //dependencies{
