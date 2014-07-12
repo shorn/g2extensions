@@ -15,7 +15,8 @@ apply plugin: 'g2idea13'
 apply plugin: 'java'
 
 ext{
-  exampleIdeaGen = "../../../gen/example-g2idea/example-g2idea"
+//  exampleIdeaGen = "../../../gen/example-g2idea/example-g2idea"
+  exampleIdeaGen = "../../../gen/example-g2idea"
 }
 
 repositories {
@@ -24,16 +25,10 @@ repositories {
 
 idea {
   g2idea13{
+    baseDirectory = project.ext.exampleIdeaGen
     compilerConfiguration = 'Eclipse'
   }
 
-  tasks.ideaWorkspace.outputFile =
-    file("${rootProject.ext.exampleIdeaGen}.iws")
-  module.outputFile = file("${rootProject.ext.exampleIdeaGen}.iml")
-
-  project {
-    outputFile = file("${rootProject.ext.exampleIdeaGen}.ipr")
-  }
 }
 
 
