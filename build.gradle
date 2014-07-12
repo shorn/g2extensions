@@ -42,7 +42,6 @@ subprojects { Project iProject ->
   targetCompatibility = 1.6
 
   dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.3.2'
   }
 
 }
@@ -53,6 +52,7 @@ project(':eclipsei2g') {
   version = '0.0.1-SNAPSHOT'
 
   dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.3.2'
     compile 'org.gradle:gradle-core:2.0'
   }
 }
@@ -63,8 +63,11 @@ project(':g2idea13') {
 
   dependencies {
     compile gradleApi()
+
+    // gradleApi() will bring all of the following (different version of groovy)
 //    compile 'org.gradle:gradle-core:2.0'
 //    compile 'org.gradle:gradle-ide:2.0'
+//    compile 'org.codehaus.groovy:groovy-all:2.3.2'
   }
 }
 
