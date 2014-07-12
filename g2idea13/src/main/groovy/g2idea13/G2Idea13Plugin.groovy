@@ -12,10 +12,11 @@ class G2Idea13Plugin implements Plugin<Project> {
     project.plugins.withType(IdeaPlugin){ IdeaPlugin ideaPlugin ->
       project.logger.debug "idea plugin applied to project: $ideaPlugin"
 
-      project.idea.extensions.create("g2idea13", G2Idea13ProjectConvention)
-      project.idea.extensions.g2idea13.ideaPlugin = ideaPlugin
-      project.idea.extensions.g2idea13.project = project
-      project.logger.debug "g2idea13 project set to :" + project
+      G2Idea13ProjectConvention projectConv = project.idea.extensions.create(
+        "g2idea13",G2Idea13ProjectConvention)
+      projectConv.ideaPlugin = ideaPlugin
+      projectConv.project = project
+      project.logger.debug "g2idea13 project set to : $project"
     }
 
     project.afterEvaluate { Project delegateProject ->
@@ -57,6 +58,8 @@ class G2Idea13Plugin implements Plugin<Project> {
 class G2Idea13ProjectConvention {
   Project project
   IdeaPlugin ideaPlugin
+
+  String baseDirectory
 
   String compilerConfiguration
   String vcs
