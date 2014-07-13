@@ -13,6 +13,7 @@ buildscript {
 apply plugin: 'eclipsei2g'
 apply plugin: 'java'
 
+project.buildDir = "../../../gen/examples-build/eclipsei2g"
 
 repositories {
   jcenter()
