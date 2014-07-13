@@ -1,3 +1,26 @@
+/**
+ * If you want to actually run g2idea13 on the g2extensions project, make you
+ * have previously built and uploaded a version to the snapshot repo.
+ * Then run the idea task with the "g2ideaidea13=true" system property set.
+ */
+buildscript{
+  // buildScript can't see variables in the rest of the script
+  ext.g2idea13Version = '0.0.1-SNAPSHOT'
+
+  repositories{
+    jcenter()
+    maven{
+      url uri("../gen/repo")
+    }
+  }
+
+  if( System.properties.g2idea13build ){
+    dependencies{
+      classpath 'g2extensions:g2idea13:' + project.ext.g2idea13Version
+    }
+  }
+}
+
 
 
 ext.genDir = "gen"
@@ -20,20 +43,25 @@ allprojects { Project iProject ->
     jcenter()
   }
 
-//  idea.module.outputFile =
-//    file("${rootProject.ext.idePrefix}/${iProject.name}.iml")
+  if( System.properties.g2idea13build ){
+    apply plugin: 'g2idea13'
+  }
+
 }
 
-// This is replaced by the dog-fooding section at end of file
-//idea {
-//  tasks.ideaWorkspace.outputFile =
-//    file("${rootProject.ext.idePrefix}/${rootProject.name}.iws")
-//  project {
-//    languageLevel = '1.6'
-//    jdkName = '1.6'
-//    outputFile = file("${rootProject.ext.idePrefix}/${rootProject.name}.ipr")
-//  }
-//}
+idea {
+  if( System.properties.g2idea13build ){
+    g2idea13{
+      baseDirectory = rootProject.ext.idePrefix + 'test/' // DO NOT COMMIT
+//      baseDirectory = rootProject.ext.idePrefix
+    }
+  }
+
+  project {
+    languageLevel = '1.6'
+    jdkName = '1.6'
+  }
+}
 
 
 subprojects { Project iProject ->
@@ -43,9 +71,6 @@ subprojects { Project iProject ->
 
   sourceCompatibility = 1.6
   targetCompatibility = 1.6
-
-  dependencies {
-  }
 
 }
 
@@ -62,7 +87,7 @@ project(':eclipsei2g') {
 
 project(':g2idea13') {
   group = 'g2extensions'
-  version = '0.0.1-SNAPSHOT'
+  version = g2idea13Version
 
   dependencies {
     compile gradleApi()
@@ -97,34 +122,3 @@ configure([project(':eclipsei2g'), project(':g2idea13')]) {
 
 }
 
-
-// Special dog-fooding bootstrap section, where I try to use a previously built
-// version of g2idea13 to generate the idea project for g2extensions itself
-// It's a bit crazy, comment out everything below this if you're getting
-// problems from this stuff.
-
-/**
- * Before you can run the "idea" task to generate an IDEA project, you have to
- * build g2extensions from the command line first.
- * Make sure the version that this tries to include is the same as what is
- * defined for the ':g2idea13' project you built.
- * Can't use do it dynamically because buildscript section is special.
- */
-buildscript{
-  if( System.properties.specialInclude ){
-    repositories{
-      jcenter()
-      maven{
-        url uri("../gen/repo")
-      }
-    }
-
-    dependencies{
-      classpath 'g2extensions:g2idea13:0.0.1-SNAPSHOT'
-    }
-  }
-}
-
-if( System.properties.specialInclude ){
-  apply from: 'examples/g2extensions/build.gradle'
-}
