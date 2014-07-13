@@ -2,6 +2,8 @@
  * If you want to actually run g2idea13 on the g2extensions project, make you
  * have previously built and uploaded a version to the snapshot repo.
  * Then run the idea task with the "g2ideaidea13=true" system property set.
+ * If you set this property on the very first run on a machine,
+ * the build won't wprk.
  */
 buildscript{
   // buildScript can't see variables in the rest of the script
@@ -48,21 +50,6 @@ allprojects { Project iProject ->
   }
 
 }
-
-idea {
-  if( System.properties.g2idea13build ){
-    g2idea13{
-      baseDirectory = rootProject.ext.idePrefix + 'test/' // DO NOT COMMIT
-//      baseDirectory = rootProject.ext.idePrefix
-    }
-  }
-
-  project {
-    languageLevel = '1.6'
-    jdkName = '1.6'
-  }
-}
-
 
 subprojects { Project iProject ->
   apply plugin: 'groovy'
@@ -120,5 +107,30 @@ configure([project(':eclipsei2g'), project(':g2idea13')]) {
     }
   }
 
+}
+
+idea {
+  if( System.properties.g2idea13build ){
+    g2idea13{
+      baseDirectory = rootProject.ext.idePrefix + 'test/' // DO NOT COMMIT
+//      baseDirectory = rootProject.ext.idePrefix
+
+      vcs = 'hg4idea'
+      vcsDirectory = rootProject.projectDir
+    }
+  }
+
+  project {
+    languageLevel = '1.6'
+    jdkName = '1.6'
+  }
+
+  module{
+    excludeDirs += file('examples/eclipsei2g/.gradle"')
+    excludeDirs += file('examples/eclipsei2g/build"')
+    excludeDirs += file('examples/g2idea13/.gradle"')
+    excludeDirs += file('examples/g2idea13/build')
+    excludeDirs += file('gradle"')
+  }
 }
 

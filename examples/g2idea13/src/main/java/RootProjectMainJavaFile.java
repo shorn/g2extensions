@@ -1,4 +1,4 @@
-public class SubprojectTestJavaFile {
+public class RootProjectMainJavaFile {
   public static void main(String... args){
 
   }

@@ -35,6 +35,10 @@ idea {
     baseDirectory = project.ext.exampleIdeaGen
     compilerConfiguration = 'Eclipse'
     compilerHeapSize = '512'
+
+    // emptying this out to force the rootproject to not recognise the
+    // test reouce dir but the subproject should still work
+    testResourcePatterns = []
   }
 }
 

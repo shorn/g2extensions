@@ -34,6 +34,20 @@ class G2Idea13Plugin implements Plugin<Project>
       if( !delegateProject.parent ){
         configureRootProjectSpecificStuff(projectConv)
       }
+
+      projectConv.ideaPlugin.model.module?.iml?.withXml{ provider ->
+        provider.node.component.content.sourceFolder.each{
+          if( projectConv.resourcePatterns &&
+            it.@url =~ projectConv.resourcePatterns.join("|")
+          ){
+            it.@type = "java-resource"
+          }
+          if( projectConv.testResourcePatterns &&
+            it.@url =~ projectConv.testResourcePatterns.join("|")
+          ){
+            it.@type = "java-test-resource"
+          }
+      } }
     }
 
   }
@@ -80,12 +94,18 @@ class G2Idea13Plugin implements Plugin<Project>
 
 }
 
+class G2IDea13Utils{
+
+}
+
 
 class G2Idea13ProjectConvention{
   Project project
   IdeaPlugin ideaPlugin
 
   String baseDirectory
+  List<String> resourcePatterns = [".*/src/main/resources"]
+  List<String> testResourcePatterns = [".*/src/test/resources"]
 
   String compilerConfiguration
   String vcs
