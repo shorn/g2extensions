@@ -127,9 +127,7 @@ idea {
 
   module{
     excludeDirs += file('examples/eclipsei2g/.gradle"')
-    excludeDirs += file('examples/eclipsei2g/build"')
     excludeDirs += file('examples/g2idea13/.gradle"')
-    excludeDirs += file('examples/g2idea13/build')
     excludeDirs += file('gradle"')
   }
 }
