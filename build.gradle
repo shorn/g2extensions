@@ -1,9 +1,10 @@
 /**
- * If you want to actually run g2idea13 on the g2extensions project, make you
- * have previously built and uploaded a version to the snapshot repo.
+ * If you want to actually run g2idea13 on the g2extensions project,
+ * make sure you have previously built and uploaded a version to the snapshot
+ * repo.
  * Then run the idea task with the "g2ideaidea13=true" system property set.
  * If you set this property on the very first run on a machine,
- * the build won't wprk.
+ * the build won't work.
  */
 buildscript{
   // buildScript can't see variables in the rest of the script
@@ -18,7 +19,7 @@ buildscript{
 
   if( System.properties.g2idea13build ){
     dependencies{
-      classpath 'g2extensions:g2idea13:' + project.ext.g2idea13Version
+      classpath 'g2extensions:g2idea13:' + g2idea13Version
     }
   }
 }
@@ -58,7 +59,6 @@ subprojects { Project iProject ->
 
   sourceCompatibility = 1.6
   targetCompatibility = 1.6
-
 }
 
 
@@ -112,8 +112,8 @@ configure([project(':eclipsei2g'), project(':g2idea13')]) {
 idea {
   if( System.properties.g2idea13build ){
     g2idea13{
-      baseDirectory = rootProject.ext.idePrefix + 'test/' // DO NOT COMMIT
-//      baseDirectory = rootProject.ext.idePrefix
+//      baseDirectory = rootProject.ext.idePrefix + 'test/' // DO NOT COMMIT
+      baseDirectory = rootProject.ext.idePrefix
 
       vcs = 'hg4idea'
       vcsDirectory = rootProject.projectDir
@@ -126,9 +126,9 @@ idea {
   }
 
   module{
-    excludeDirs += file('examples/eclipsei2g/.gradle"')
-    excludeDirs += file('examples/g2idea13/.gradle"')
-    excludeDirs += file('gradle"')
+    excludeDirs += file('gradle')
+    excludeDirs += file('examples/eclipsei2g/.gradle')
+    excludeDirs += file('examples/g2idea13/.gradle')
   }
 }
 
