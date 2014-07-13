@@ -2,6 +2,7 @@ package g2idea13
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.XmlProvider
 import org.gradle.plugins.ide.idea.IdeaPlugin
 
 
@@ -61,7 +62,7 @@ class G2Idea13Plugin implements Plugin<Project>
     projectConv.project.tasks.ideaWorkspace.outputFile = new File(
       baseDirFile, "${projectConv.project.name}.iws")
 
-    projectConv.ideaPlugin.model.project?.ipr?.withXml{ provider ->
+    projectConv.ideaPlugin.model.project?.ipr?.withXml{ XmlProvider provider ->
       if( projectConv.compilerConfiguration ){
         provider.node.component.find{ it.@name == 'CompilerConfiguration' }.
           option.@value = projectConv.compilerConfiguration
@@ -76,6 +77,11 @@ class G2Idea13Plugin implements Plugin<Project>
         provider.node.component.find{ it.@name == 'VcsDirectoryMappings' }.
           mapping.@directory = projectConv.vcsDirectory
       }
+
+
+      if( projectConv.disableSpelling ){
+        disableSpelling(provider)
+      }
     }
 
     projectConv.ideaPlugin.model.workspace?.iws?.withXml{ provider ->
@@ -88,6 +94,45 @@ class G2Idea13Plugin implements Plugin<Project>
           [name : "COMPILER_PROCESS_HEAP_SIZE",
            value: projectConv.getCompilerHeapSize()])
       }
+    }
+  }
+
+  private void disableSpelling(XmlProvider provider){
+    def inspectionProfiles = provider.node.component.find{
+      it.@name == 'InspectionProjectProfileManager'
+    }
+
+    if( inspectionProfiles ){
+      inspectionProfiles.profiles.profile.inspection.inspection_tool.find{
+        it.@class == 'SpellCheckingInspection'
+      }.enabled = 'false'
+    }
+    else {
+      def builder = new NodeBuilder()
+      def profiles = builder.profiles{
+        profile(version: '1.0', is_locked: false){
+          option(name: 'myName', value: 'Project Default')
+          option(name: 'myLocal', value: false)
+          inspection_tool(
+            class: 'SpellCheckingInspection',
+            enabled: false,
+            level: 'TYPO',
+            enabled_by_default: false) {
+              option(name: 'processCode', value: false)
+              option(name: 'processLiterals', value: false)
+              option(name: 'processComments', value: false)
+            }
+        }
+      }
+
+
+      def component = provider.node.appendNode(
+        "component", [name: "InspectionProjectProfileManager"])
+      component.append(profiles)
+      component.appendNode 'option',
+        [name: 'PROJECT_PROFILE', value: 'Project Default']
+      component.appendNode 'option', [name: 'USE_PROJECT_PROFILE', value: true]
+      component.appendNode 'version', [value: "1.0"]
     }
   }
 
@@ -107,6 +152,7 @@ class G2Idea13ProjectConvention{
   List<String> resourcePatterns = [".*/src/main/resources"]
   List<String> testResourcePatterns = [".*/src/test/resources"]
 
+  String disableSpelling = true
   String compilerConfiguration
   String vcs
   String vcsDirectory

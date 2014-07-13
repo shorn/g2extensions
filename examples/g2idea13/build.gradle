@@ -1,3 +1,8 @@
+/**
+ * If you're opening in IDEA to test this project, make sure to be invalidating
+ * IDEA cache, or you'll get weird behaviour from IDEA.
+ */
+
 buildscript {
   repositories {
     jcenter()
@@ -36,7 +41,9 @@ idea {
     compilerHeapSize = '512'
 
     // emptying this out to force the rootproject to not recognise the
-    // test reouce dir but the subproject should still work
+    // test resource dir but the subproject should still work.
+    // If you're opening in IDEA to test, this will be marked as a test
+    // source dir
     testResourcePatterns = []
   }
 }
