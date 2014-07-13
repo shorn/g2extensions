@@ -45,6 +45,9 @@ idea {
     // If you're opening in IDEA to test, this will be marked as a test
     // source dir
     testResourcePatterns = []
+
+    finalMessage =
+      "IDEA project files generated to ${file(project.ext.exampleIdeaGen)}"
   }
 }
 

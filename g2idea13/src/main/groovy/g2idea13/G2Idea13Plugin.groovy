@@ -1,13 +1,13 @@
 package g2idea13
 
+import org.gradle.BuildResult
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.XmlProvider
 import org.gradle.plugins.ide.idea.IdeaPlugin
 
 
-class G2Idea13Plugin implements Plugin<Project>
-{
+class G2Idea13Plugin implements Plugin<Project>{
   void apply(Project project){
     project.logger.debug "g2idea13 apply called from $project"
 
@@ -47,10 +47,15 @@ class G2Idea13Plugin implements Plugin<Project>
             it.@url =~ projectConv.testResourcePatterns.join("|")
           ){
             it.@type = "java-test-resource"
-          }
-      } }
-    }
+      } } }
 
+
+      if( projectConv.finalMessage ){
+        projectConv.project.gradle.buildFinished{ BuildResult buildResult ->
+          if( !buildResult.failure ){
+            println projectConv.finalMessage
+      } } }
+    }
   }
 
   private void configureRootProjectSpecificStuff(
@@ -139,10 +144,6 @@ class G2Idea13Plugin implements Plugin<Project>
 
 }
 
-class G2IDea13Utils{
-
-}
-
 
 class G2Idea13ProjectConvention{
   Project project
@@ -153,11 +154,14 @@ class G2Idea13ProjectConvention{
   List<String> testResourcePatterns = [".*/src/test/resources"]
 
   String disableSpelling = true
+
   String compilerConfiguration
   String vcs
   String vcsDirectory
-
   String compilerHeapSize
+
+  String finalMessage
+
 
   File getBaseDirectoryFile(){
     return project.file(baseDirectory)
