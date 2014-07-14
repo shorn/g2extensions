@@ -117,6 +117,8 @@ idea {
 
       vcs = 'hg4idea'
       vcsDirectory = rootProject.projectDir
+    finalMessage =
+      "IDEA project files generated to ${file(project.ext.idePrefix)}"
     }
   }
 
