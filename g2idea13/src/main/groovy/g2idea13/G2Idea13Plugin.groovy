@@ -28,6 +28,9 @@ class G2Idea13Plugin implements Plugin<Project>{
         delegateProject.rootProject.idea.extensions.g2idea13
 
       if( rootProjectConv.baseDirectory ){
+        // TODO:SBT need a way to override the project name too,
+        // otherwise the gradle project name controls the idea project name
+        // we should have a projectConv.ideaProjectName
         projectConv.ideaPlugin.model.module.outputFile = new File(
           rootProjectConv.baseDirectoryFile, "${projectConv.project.name}.iml")
       }
