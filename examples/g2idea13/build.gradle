@@ -19,7 +19,7 @@ project.buildDir = "../../../gen/examples-build/g2idea13"
 
 ext{
 //  exampleIdeaGen = "../../../gen/example-g2idea/example-g2idea"
-  exampleIdeaGen = "../../../gen/example-g2idea"
+  exampleIdeaGen = "../../../gen/example-g2idea-3"
 }
 
 repositories {
@@ -37,6 +37,7 @@ allprojects{ Project iProject ->
 idea {
   g2idea13{
     baseDirectory = project.ext.exampleIdeaGen
+    baseProjectName = "wibble"
     compilerConfiguration = 'Eclipse'
     compilerHeapSize = '512'
 

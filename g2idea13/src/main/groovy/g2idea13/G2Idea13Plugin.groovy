@@ -28,11 +28,19 @@ class G2Idea13Plugin implements Plugin<Project>{
         delegateProject.rootProject.idea.extensions.g2idea13
 
       if( rootProjectConv.baseDirectory ){
-        // TODO:SBT need a way to override the project name too,
-        // otherwise the gradle project name controls the idea project name
-        // we should have a projectConv.ideaProjectName
-        projectConv.ideaPlugin.model.module.outputFile = new File(
-          rootProjectConv.baseDirectoryFile, "${projectConv.project.name}.iml")
+        if( !delegateProject.parent && projectConv.baseProjectName ){
+          projectConv.ideaPlugin.model.module.outputFile = new File(
+            rootProjectConv.baseDirectoryFile,
+            "${projectConv.baseProjectName}.iml" )
+        }
+        else {
+          // subprojects should be named after their gradle project
+          // (probably just dir name anyway)
+          projectConv.ideaPlugin.model.module.outputFile = new File(
+            rootProjectConv.baseDirectoryFile,
+            "${projectConv.project.name}.iml" )
+
+        }
       }
 
       if( !delegateProject.parent ){
@@ -64,11 +72,12 @@ class G2Idea13Plugin implements Plugin<Project>{
   private void configureRootProjectSpecificStuff(
     G2Idea13ProjectConvention projectConv)
   {
+    String baseName = projectConv.baseProjectName ?: projectConv.project.name
     def baseDirFile = projectConv.baseDirectoryFile
     projectConv.ideaPlugin.model.project.outputFile = new File(
-      baseDirFile, "${projectConv.project.name}.ipr")
+      baseDirFile, "${baseName}.ipr")
     projectConv.project.tasks.ideaWorkspace.outputFile = new File(
-      baseDirFile, "${projectConv.project.name}.iws")
+      baseDirFile, "${baseName}.iws")
 
     projectConv.ideaPlugin.model.project?.ipr?.withXml{ XmlProvider provider ->
       if( projectConv.compilerConfiguration ){
@@ -153,6 +162,7 @@ class G2Idea13ProjectConvention{
   IdeaPlugin ideaPlugin
 
   String baseDirectory
+  String baseProjectName
   List<String> resourcePatterns = [".*/src/main/resources"]
   List<String> testResourcePatterns = [".*/src/test/resources"]
 
