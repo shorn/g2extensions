@@ -95,10 +95,12 @@ class G2Idea13Plugin implements Plugin<Project>{
           mapping.@directory = projectConv.vcsDirectory
       }
 
-
       if( projectConv.disableSpelling ){
         disableSpelling(provider)
       }
+
+      provider.node.component.find{ it.@name == 'Encoding' }.
+        @native2AsciiForPropertiesFiles = projectConv.useNative2AsciiProperties
     }
 
     projectConv.ideaPlugin.model.workspace?.iws?.withXml{ provider ->
@@ -172,6 +174,8 @@ class G2Idea13ProjectConvention{
   String vcs
   String vcsDirectory
   String compilerHeapSize
+
+  boolean useNative2AsciiProperties = true
 
   String finalMessage
 
