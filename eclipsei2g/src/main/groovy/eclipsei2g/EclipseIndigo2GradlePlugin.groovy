@@ -5,11 +5,10 @@ import org.gradle.api.Project
 
 class EclipseIndigo2GradlePlugin implements Plugin<Project> {
   void apply(Project project) {
-    project.logger.debug "eclipse2gradle apply called from $project"
+    project.logger.debug "eclipsei2g apply called from $project"
 
-    // TODO:STO rename convention variable to eclipsei2g
-    project.extensions.create("eclipse2gradle", Eclipse2GProjectConvention)
-    project.extensions.eclipse2gradle.project = project
+    project.extensions.create("eclipsei2g", Eclipse2GProjectConvention)
+    project.extensions.eclipsei2g.project = project
   }
 }
 
@@ -78,18 +77,6 @@ class Eclipse2GProjectConvention {
     }
   }
 
-  // TODO:STO implement a variable to simplify the following
-  /*
-  eclipseGenDir = System.getProperty("eclipseGenDir", "${jfeProjectDir.absoluteFile}/classes")
-  module{
-    if( eclipseGenDir ){
-      println "targetting output at: ${eclipseGenDir}"
-      inheritOutputDirs = false
-      outputDir = new File(eclipseGenDir)
-      testOutputDir = new File(eclipseGenDir)
-    }
-  }
-   */
 }
 
 

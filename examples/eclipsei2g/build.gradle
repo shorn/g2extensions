@@ -19,13 +19,13 @@ repositories {
   jcenter()
 }
 
-eclipse2gradle{
+eclipsei2g{
   classpath = file('.classpath')
   modifyPath{ it.replace("C:/", "//blah/") }
 }
 
 dependencies{
-  compile files(eclipse2gradle.filePaths)
+  compile files(eclipsei2g.filePaths)
   compile 'junit:junit:4.+'
 }
 
