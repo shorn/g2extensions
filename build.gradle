@@ -8,7 +8,7 @@
  */
 buildscript{
   // buildScript can't see variables in the rest of the script
-  ext.g2idea13Version = '0.0.1-SNAPSHOT'
+  ext.g2idea13Version = '1.0.0'
 
   repositories{
     jcenter()
@@ -34,8 +34,8 @@ println "setting root project $project.name build dir to: $project.buildDir"
 project.ext {
   idePrefix = "${rootProject.buildDir}/../gradle-idea/"
 
-  deployRepoUri = '../../shorn.bitbucket.org/maven'
-  snapshotRepoUri = "${rootProject.buildDir}/../repo"
+  deployRepoUri = "${rootProject.buildDir}/../deploy-repo"
+  snapshotRepoUri = "${rootProject.buildDir}/../snapshot-repo"
 }
 
 allprojects { Project iProject ->
@@ -64,7 +64,7 @@ subprojects { Project iProject ->
 
 project(':eclipsei2g') {
   group = 'g2extensions'
-  version = '0.0.1-SNAPSHOT'
+  version = '1.0.0'
 
   dependencies {
     compile gradleApi()

@@ -2,11 +2,12 @@ buildscript {
   repositories {
     jcenter()
     maven {
-      url uri('../../../gen/repo')
+//      url uri('../../../gen/repo')
+      url('http://dl.bintray.com/shorn/g2extensions/')
     }
   }
   dependencies {
-    classpath 'g2extensions:eclipsei2g:0.0.1-SNAPSHOT'
+    classpath 'g2extensions:eclipsei2g:1.0.0'
   }
 }
 

@@ -7,11 +7,12 @@ buildscript {
   repositories {
     jcenter()
     maven {
-      url uri('../../../gen/repo')
+//      url uri('../../../gen/repo')
+      url('http://dl.bintray.com/shorn/g2extensions/')
     }
   }
   dependencies {
-    classpath 'g2extensions:g2idea13:0.0.1-SNAPSHOT'
+    classpath 'g2extensions:g2idea13:1.0.0'
   }
 }
 
@@ -19,7 +20,7 @@ project.buildDir = "../../../gen/examples-build/g2idea13"
 
 ext{
 //  exampleIdeaGen = "../../../gen/example-g2idea/example-g2idea"
-  exampleIdeaGen = "../../../gen/example-g2idea-3"
+  exampleIdeaGen = "../../../gen/example-g2idea-4"
 }
 
 repositories {
