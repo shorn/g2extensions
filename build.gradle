@@ -8,7 +8,8 @@
  */
 buildscript{
   // buildScript can't see variables in the rest of the script
-  ext.g2idea13Version = '1.0.0'
+  ext.g2idea13Version = '1.1.0-SNAPSHOT'
+  ext.eclipsei2gVersion = '1.1.0-SNAPSHOT'
 
   repositories{
     jcenter()
@@ -64,7 +65,7 @@ subprojects { Project iProject ->
 
 project(':eclipsei2g') {
   group = 'g2extensions'
-  version = '1.0.0'
+  version = eclipsei2gVersion
 
   dependencies {
     compile gradleApi()
@@ -111,8 +112,8 @@ idea {
 
       vcs = 'hg4idea'
       vcsDirectory = rootProject.projectDir
-    finalMessage =
-      "IDEA project files generated to ${file(project.ext.idePrefix)}"
+      finalMessage =
+        "IDEA project files generated to ${file(project.ext.idePrefix)}"
     }
   }
 
